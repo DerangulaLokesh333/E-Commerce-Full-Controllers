@@ -14,14 +14,18 @@ const addProduct = (req, res) => {
 };
 
 
-const getProductById = (req, res) => {
+const getProductById = (req, res, next) => {
     const id = req.params.id;
+
+    if (!id) {
+        const error = new Error('Product ID is required');
+        return next(error);
+    }
 
     const message = productService.getProductById(id);
 
     res.send(message);
 };
-
 module.exports = {
     getAllProducts,
     addProduct,
